@@ -5,33 +5,38 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+7
 
 10 001 番目の素数を求めよ.
 
+comment:
+最初試し割を実装した。その後,素数篩を実装した。
+十分に大きい N をふるい落とすエラトステネスのふるいが圧倒的に速いが N が勘なので、これで良いのか？という疑問もある。
+篩はcons と filter の非効率そうなものと、ベクトルを使ったエラトステネスのふるいの２つを試した。
+Lisp のリストは連結リストなので、ベクトルにするだけで速くなりそう。
+しかし、Lisp を使った甲斐がない気もする。
 
 |#
 ;;; score
 ;; real    0m10.776s
 ;; user    0m10.769s
 ;; sys     0m0.009s
-
+;;
 ;; real    0m1.550s
 ;; user    0m3.205s
 ;; sys     0m0.127s
+;; 
+;; real    0m0.019s
+;; user    0m0.026s
+;; sys     0m0.007s
+
+
 ;;; エントリーポイント
 (define (main args)
-  (print 
-    ;; (next-prime 15 primes)
-    ;; (Euler7)
-    ;; "\n"
-    (list-ref (sieve 200000) 10000)
-    ; (make-table)
-    )
+  (print (Euler7/sieve))
   0)
 
 ;;; 実装
 ;; given primes. 
-; (define primes '(13 11 7 5 3 2))
 (define primes '(2 3 5 7 11 13))
 
-;;
+;; 試し割
 ;; real    0m1.550s
 ;; user    0m3.205s
 ;; sys     0m0.127s
@@ -56,49 +61,13 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+7
       (else (next-prime n (cdr primes))))))
 
 
-;;
-(define (make-table)
-  (let loop ((n 2)
-             (acc '()))
-    (if (= n 10001)
-      (cons (list n #t) acc)
-      (loop (+ n 1) (cons (list n #t) acc)))))
-      
-;; sieve by filter
-;(define (sieve ceil)
-;  (let ((init-table (iota 1000 3 2)))
-;    (let loop ((table (filter 
-;                        (lambda (x) (zero? (remainder x 2))) 
-;                              init-table)
-;               (cursol 3)
-;               (lst '(2))))
-;      (if (>= cursol ceil)
-;        lst
-;        (loop (filter (lambda (x) 
-;                        (zero? (remainder x cursol)))
-;                      table)
-;              (cadr table)
-;              cursol)))))
-
-;(define (sieve ceil)
-;  (let ((init-table (iota ceil 3 2)))
-;    (let loop ((table (filter 
-;                        (lambda (x) (not (zero? (remainder x 2)))) 
-;                        init-table))
-;               (cursol 3)
-;               (lst '(2)))
-;      (if (>= cursol ceil)
-;          lst
-;          (let* ((filtered (filter (lambda (x) (not (zero? (remainder x cursol)))) table))
-;                 (next (if (null? filtered) cursol (car filtered))))
-;            (loop filtered next (cons cursol lst)))))))
-
-;;
-; (define (marking x lst)
-;   (let loop ((res lst))
-;     (if (eq? (cadr lst) #t)
-; 
-
+;; エラトステネスのふるいを使う方法
+;; N までの自然数に素数がいくつあるのかを調べるにはとても速い方法だが、
+;; N が大きくなりがち、N を事前に推定することができれば良さそう。
+;; (N = 125000) で計算しているが、これはガチャガチャ調べた結果
+(define (Euler7/sieve)
+  (let ((primes (sieve-fast 125000)))
+    (list-ref primes 10000)))
 
 ;; cons と filter による単純な素数判定篩
 ;; (list-ref (sieve 200000) 10000)

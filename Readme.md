@@ -6,7 +6,7 @@
 ## 結果発表スクリプト
 
 ```
- for file in $(find . -name "*scm"); do 
+ for file in $(find . -type f -name 'euler*.scm' | sort -t 'r' -k2.1n); do 
      echo "::::::::::::::::::::::::::";
      echo "::::::::::::::::::::::::::";
      echo "$file";
