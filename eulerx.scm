@@ -12,7 +12,12 @@ comment:
 
 ;;; エントリーポイント
 (define (main args)
-  
-  0)
+  (cond 
+    ;; テスト
+
+    (else 
+      (print (euler[number])))
+      0))
+
 ;;; 実装
 
