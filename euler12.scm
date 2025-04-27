@@ -13,7 +13,7 @@ sys     0m0.010s
 
 ;;; エントリーポイント
 (define (main args)
-  (print (euler12 500))
+  (print (cadr (euler12 500)))
   0)
 
 ;;; 実装

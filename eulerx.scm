@@ -11,13 +11,17 @@ comment:
 |#
 
 ;;; エントリーポイント
+(set! *load-path* (cons "./" *load-path*))
+(use euler-libs)
+
 (define (main args)
   (cond 
     ;; テスト
+    ; (if (= euler[number] [case1]) (display ".") (begin (display "Error!") 1))
 
     (else 
-      (print (euler[number])))
-      0))
+      (print (euler[number]))
+      0)))
 
 ;;; 実装
 
