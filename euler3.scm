@@ -1,7 +1,6 @@
 ;;;;; Euler Project
 ;;;; Q.3
 
-
 ;;; エントリーポイント
 (define (main args)
   (print (euler3 600851475143))
@@ -18,4 +17,3 @@
 
 (define (euler3 integer)
   (car (factors integer)))
-

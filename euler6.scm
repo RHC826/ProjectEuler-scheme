@@ -11,8 +11,6 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+6
 これらの数の差は 3025 - 385 = 2640 となる.
 
 同様にして, 最初の100個の自然数について二乗の和と和の二乗の差を求めよ.
-
-
 |#
 
 ;;; エントリーポイント
@@ -20,19 +18,18 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+6
   ;; test code
   ;; (print (sum-squares (iota 10 1 1)))
   ;; (print (square-sum (iota 10 1 1)))
-  ;; (print (- 
+  ;; (print (-
   ;;          (square-sum (iota 10 1 1))
   ;;          (sum-squares (iota 10 1 1))))
-  (print (- 
-           (square-sum (iota 100 1 1))
-           (sum-squares (iota 100 1 1))))
+  (print (-
+          (square-sum (iota 100 1 1))
+          (sum-squares (iota 100 1 1))))
   0)
 
 ;;; 実装
 (define (sum-squares lst)
-  (fold + 0 
-        (map (lambda (x) (* x x)) lst)))
-
+  (fold + 0
+    (map (lambda (x) (* x x)) lst)))
 
 (define (square-sum lst)
   (let ((sum (fold + 0 lst)))

@@ -13,15 +13,14 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+16
 time:
 
 comment:
-
 |#
 
 ;;; エントリーポイント
 (define (main args)
-  (cond 
+  (cond
     ;; テスト
 
-    (else 
+    (else
       (print (euler16 1000))
       0)))
 
@@ -31,4 +30,3 @@ comment:
     (string->list (number->string (expt 2 n))))
   (let ((digits (make-ints n)))
     (apply + (map digit->integer digits))))
-

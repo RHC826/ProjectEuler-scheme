@@ -1,4 +1,3 @@
-
 ;;;;; Euler Project Q.17
 
 #|
@@ -9,16 +8,15 @@ time:
 
 comment:
 絶対面倒くさいので、AIに書かせた。
-
 |#
 
 ;;; エントリーポイント
 (define (main args)
-  (cond 
+  (cond
     ;; テスト
     ; (if (= euler17 [case1]) (display ".") (begin (display "Error!") 1))
 
-    (else 
+    (else
       (print (euler17))
       0)))
 
@@ -30,17 +28,27 @@ comment:
 ;; 1～9 の名前（空文字を先頭に詰めてインデックス対応）
 (define ones
   (list "" "one" "two" "three" "four" "five"
-        "six" "seven" "eight" "nine"))
+    "six"
+    "seven"
+    "eight"
+    "nine"))
 
 ;; 10～19 の名前（10 を先頭に、インデックス＝ 10…19 → 0…9）
 (define teens
   (list "ten" "eleven" "twelve" "thirteen" "fourteen"
-        "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"))
+    "fifteen"
+    "sixteen"
+    "seventeen"
+    "eighteen"
+    "nineteen"))
 
 ;; 20,30,…,90 の名前（インデックス＝ 0,1 はダミー）
 (define tens-names
   (list "" "" "twenty" "thirty" "forty" "fifty"
-        "sixty" "seventy" "eighty" "ninety"))
+    "sixty"
+    "seventy"
+    "eighty"
+    "ninety"))
 
 ;; n を受け取って、スペース・ハイフンを含まない英単語文字列を返す
 (define (num->word n)
@@ -50,38 +58,38 @@ comment:
 
     ;; 100 以上 999 以下
     ((>= n 100)
-     (let ((h (quotient n 100))
-           (r (remainder n 100)))
-       (if (= r 0)
-           ;; ちょうど百の倍数
-           (string-append (list-ref ones h) "hundred")
-           ;; 百以上で余りあり → “hundredand…”
-           (string-append (list-ref ones h)
-                          "hundredand"
-                          (num->word r)))))
+      (let ((h (quotient n 100))
+            (r (remainder n 100)))
+        (if (= r 0)
+          ;; ちょうど百の倍数
+          (string-append (list-ref ones h) "hundred")
+          ;; 百以上で余りあり → “hundredand…”
+          (string-append (list-ref ones h)
+            "hundredand"
+            (num->word r)))))
 
     ;; 20 ～ 99
     ((>= n 20)
-     (let ((t (quotient n 10))
-           (r (remainder n 10)))
-       (if (= r 0)
-           ;; ちょうど十の倍数
-           (list-ref tens-names t)
-           ;; 十の倍数＋1～9
-           (string-append (list-ref tens-names t)
-                          (list-ref ones r)))))
+      (let ((t (quotient n 10))
+            (r (remainder n 10)))
+        (if (= r 0)
+          ;; ちょうど十の倍数
+          (list-ref tens-names t)
+          ;; 十の倍数＋1～9
+          (string-append (list-ref tens-names t)
+            (list-ref ones r)))))
 
     ;; 10 ～ 19
     ((>= n 10)
-     (list-ref teens (- n 10)))
+      (list-ref teens (- n 10)))
 
     ;; 1 ～ 9
     ((> n 0)
-     (list-ref ones n))
+      (list-ref ones n))
 
     ;; それ以外（0 以下）は空
     (else
-     "")))
+      "")))
 
 ;; ------------------------------------------------------------
 ;; 1～1000 を走査して文字数を合計する
@@ -89,11 +97,10 @@ comment:
 (define (euler17)
   (let loop ((i 1) (sum 0))
     (if (> i 1000)
-        sum
-        (loop (+ i 1)
-              (+ sum (string-length (num->word i)))))))
+      sum
+      (loop (+ i 1)
+        (+ sum (string-length (num->word i)))))))
 
 ;; 結果の表示
 ; (display (euler17))
 ; (newline)
-

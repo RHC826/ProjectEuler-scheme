@@ -19,16 +19,15 @@ user    0m17.871s
 sys     0m0.499s
 
 comment:
-
 |#
 ;;; エントリーポイント
 (define (main args)
-  (cond 
+  (cond
     ;; テスト
-    ((not (= (chain 13) 10)) 
-     (print "Error!"))
+    ((not (= (chain 13) 10))
+      (print "Error!"))
 
-    (else 
+    (else
       (print (cadr (euler14-2)))
       0)))
 
@@ -38,31 +37,36 @@ comment:
   (define (chain-length n)
     (define (next-chain x count)
       (cond ((= x 1) count)
-            ((even? x) (next-chain (/ x 2) (+ count 1)))
-            (else (next-chain (+ (* 3 x) 1) (+ count 1)))))
+        ((even? x) (next-chain (/ x 2) (+ count 1)))
+        (else (next-chain (+ (* 3 x) 1) (+ count 1)))))
     (next-chain n 1))
-  
+
   (define max-length 0)
   (define max-start 0)
-  
+
   (do ((i 1 (+ i 1)))
-      ((>= i 1000000) (begin
-                        (display "最大長: ") (display max-length) (newline)
-                        (display "開始数: ") (display max-start) (newline)))
+    ((>= i 1000000) (begin
+                     (display "最大長: ")
+                     (display max-length)
+                     (newline)
+                     (display "開始数: ")
+                     (display max-start)
+                     (newline)))
     (let ((len (chain-length i)))
       (when (> len max-length)
         (set! max-length len)
         (set! max-start i)))))
 
 (define (euler14-2)
-  (do 
+  (do
     ((i 1 (+ i 1))
-     (acc '(0 0) (
-             (lambda (x y) 
-               (if (>  (car x)  (car y)) 
-                 x 
-                 y))
-             acc (list (chain i) i))))
+      (acc '(0 0) (
+                   (lambda (x y)
+                     (if (> (car x) (car y))
+                       x
+                       y))
+                   acc
+                   (list (chain i) i))))
     ((> i 1000000) acc)))
 
 ;; コラッツ予想の連鎖数を返す
@@ -75,4 +79,3 @@ comment:
         (chain-helper (+ (* x 3) 1) (+ acc 1)))))
 
   (chain-helper x 0))
-

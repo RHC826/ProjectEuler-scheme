@@ -8,7 +8,6 @@ url:https://projecteuler.net/problem=15
 では, 20×20 のマス目ではいくつのルートがあるか.
 
 time:
-
 |#
 
 ;;; エントリーポイント
@@ -23,15 +22,15 @@ time:
 ;; ※ k > n/2 の場合は対称性から binomial(n, k) = binomial(n, n-k)
 (define (binomial n k)
   (if (> k (/ n 2))
-      (binomial n (- n k))
-      (let loop ((i 1) (acc 1))
-        (if (> i k)
-            acc
-            (loop (+ i 1) ; i
-                  (/      ; acc
-                    (* acc 
-                       (- (+ n 1) i ))
-                    i))))))
+    (binomial n (- n k))
+    (let loop ((i 1) (acc 1))
+      (if (> i k)
+        acc
+        (loop (+ i 1) ; i
+          (/ ; acc
+            (* acc
+              (- (+ n 1) i))
+            i))))))
 
 ;; m×n の格子で、左上から右下にいく経路数は
 ;; binomial(m+n, m) で求められる
@@ -50,8 +49,7 @@ time:
 
 ;; nPr
 (define (permut n r)
-  (apply * (iota  r n -1)))
+  (apply * (iota r n -1)))
 
 (define (factorial n)
   (apply + (iota n 1 1)))
-

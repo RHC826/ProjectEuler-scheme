@@ -10,7 +10,6 @@ user    0m0.155s
 sys     0m0.010s
 |#
 
-
 ;;; エントリーポイント
 (define (main args)
   (print (cadr (euler12 500)))
@@ -24,8 +23,7 @@ sys     0m0.010s
       acc
       (if (zero? (remainder n devisor))
         (devisors-iter n (+ 1 devisor) (cons devisor acc))
-        (devisors-iter n (+ 1 devisor) acc)
-        ))))
+        (devisors-iter n (+ 1 devisor) acc)))))
 
 ;; 公式を使って約数の個数を出す
 ;; 1. 素因数分解する
@@ -35,22 +33,21 @@ sys     0m0.010s
   (let* ((facts (factors n)))
     (define (count-exponents lst)
       (if (null? lst)
-          '()
-          (let loop ((cur (car lst))
-                     (rest (cdr lst))
-                     (count 1)
-                     (acc '()))
-            (cond
-              ((null? rest)
-               (reverse (cons count acc)))
-              ((= cur (car rest))
-               (loop cur (cdr rest) (+ count 1) acc))
-              (else
-               (loop (car rest) (cdr rest) 1 (cons count acc)))))))
+        '()
+        (let loop ((cur (car lst))
+                   (rest (cdr lst))
+                   (count 1)
+                   (acc '()))
+          (cond
+            ((null? rest)
+              (reverse (cons count acc)))
+            ((= cur (car rest))
+              (loop cur (cdr rest) (+ count 1) acc))
+            (else
+              (loop (car rest) (cdr rest) 1 (cons count acc)))))))
 
     (apply * (map (lambda (x) (+ x 1))
-                  (count-exponents facts)))))
-
+              (count-exponents facts)))))
 
 (define (_factors x)
   (let factors-iter ((n x) (devisor 2) (acc '()))
@@ -69,24 +66,22 @@ sys     0m0.010s
       ((> (* divisor divisor) n) (reverse (cons n acc)))
       ;; 割り切れる場合：その除数を記録し、nをその除数で割る
       ((zero? (remainder n divisor))
-       (factors-iter (/ n divisor) divisor (cons divisor acc)))
+        (factors-iter (/ n divisor) divisor (cons divisor acc)))
       (else
-       (factors-iter n
-                     ;; 除数が2なら次は3、以降は2ずつスキップして奇数のみを調べる
-                     (if (= divisor 2) 3 (+ divisor 2))
-                     acc))))
+        (factors-iter n
+          ;; 除数が2なら次は3、以降は2ずつスキップして奇数のみを調べる
+          (if (= divisor 2) 3 (+ divisor 2))
+          acc))))
   (factors-iter x 2 '()))
 
 ;;
 (define (sum-tri n)
-  (/ 
-    (* n (+ n 1)) 
+  (/
+    (* n (+ n 1))
     2))
 
 (define (euler12 n)
   (let loop ((i 8))
-      (if (or (> (num-divisors (sum-tri i)) n))
-        (list i (sum-tri i))
-        (loop (+ i 1)))))
-
-
+    (if (or (> (num-divisors (sum-tri i)) n))
+      (list i (sum-tri i))
+      (loop (+ i 1)))))

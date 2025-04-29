@@ -27,8 +27,6 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+8
 この1000桁の数字から13個の連続する数字を取り出して, それらの総乗を計算する. では、それら総乗のうち、最大となる値はいくらか.
 
 EX 6桁の数123789から5個の連続する数字を取り出す場合, 1*2*3*7*8と2*3*7*8*9の二通りとなり, 後者の2*3*7*8*9=3024が最大の総乗となる.
-
-
 |#
 
 ;;; エントリーポイント
@@ -50,15 +48,12 @@ EX 6桁の数123789から5個の連続する数字を取り出す場合, 1*2*3*7
 (define (product-of-digits chars)
   (fold * 1 (map digit->integer chars))) ; not char->integer
 
-
 ;;
 (define (slide-> n lst)
   (define (slide->-iter lst acc)
     (if (= n (length lst))
       acc
       (if (<= acc (product-of-digits (pop-n n lst)))
-      (slide->-iter (cdr lst) (product-of-digits (pop-n n lst)))
-      (slide->-iter (cdr lst) acc))
-      ))
+        (slide->-iter (cdr lst) (product-of-digits (pop-n n lst)))
+        (slide->-iter (cdr lst) acc))))
   (slide->-iter lst 0))
-

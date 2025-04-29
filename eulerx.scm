@@ -7,7 +7,6 @@ url:https://odz.sakura.ne.jp/projecteuler/?Problem+[number]
 time:
 
 comment:
-
 |#
 
 ;;; エントリーポイント
@@ -15,13 +14,12 @@ comment:
 (use euler-libs)
 
 (define (main args)
-  (cond 
+  (cond
     ;; テスト
-    ; (if (= euler[number] [case1]) (display ".") (begin (display "Error!") 1))
+    ; (#t (if (= euler[number] [case1]) (display ".") (begin (display "Error!") 1)))
 
-    (else 
+    (else
       (print (euler[number]))
       0)))
 
 ;;; 実装
-

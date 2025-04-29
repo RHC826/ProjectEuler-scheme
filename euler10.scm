@@ -14,7 +14,7 @@ sys     0m0.020s
 
 ;;; エントリーポイント
 (define (main args)
-  (print (apply + (sieve-fast 2000000))) 
+  (print (apply + (sieve-fast 2000000)))
   0)
 
 ;;; 実装
@@ -27,17 +27,16 @@ sys     0m0.020s
     ;; √n までの数をループ（上限を floor(sqrt n) とする）
     (let ((limit (floor (sqrt n))))
       (do ((i 2 (+ i 1)))
-          ((> i limit))
+        ((> i limit))
         (if (vector-ref is-prime i)
-            ;; i が素数なら、i*i から n までの i の倍数をふるい落とす
-            (do ((j (* i i) (+ j i))) ; j = i*i, 次は j+i
-                ((> j n))
-              (vector-set! is-prime j #f)))))
+          ;; i が素数なら、i*i から n までの i の倍数をふるい落とす
+          (do ((j (* i i) (+ j i))) ; j = i*i, 次は j+i
+            ((> j n))
+            (vector-set! is-prime j #f)))))
     ;; ベクターから素数だけを抽出してリストにする
     (let loop ((i 2) (primes '()))
       (if (> i n)
-          (reverse primes)  ; 昇順に並ぶように reverse をかける
-          (if (vector-ref is-prime i)
-              (loop (+ i 1) (cons i primes))
-              (loop (+ i 1) primes))))))
-
+        (reverse primes) ; 昇順に並ぶように reverse をかける
+        (if (vector-ref is-prime i)
+          (loop (+ i 1) (cons i primes))
+          (loop (+ i 1) primes))))))

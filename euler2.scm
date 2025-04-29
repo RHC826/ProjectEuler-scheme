@@ -1,7 +1,6 @@
 ;;;;; Euler Project
 ;;;; Q.2
 
-
 ;;; エントリーポイント
 (define (main args)
   (print (fold + 0 (filter (lambda (x) (= 0 (remainder x 2))) (fib-list 4000000))))
@@ -15,5 +14,4 @@
   (if (<= size a)
     '()
     (cons b
-          (fib-iter b (+ a b) size))))
-
+      (fib-iter b (+ a b) size))))

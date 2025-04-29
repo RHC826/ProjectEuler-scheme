@@ -20,25 +20,24 @@
         ((= x 1) (list possibly max-x max-y))
         ;; 終了条件: x と max の積が仮値より小さい場合
         ((< (* x max) possibly) (list possibly max-x max-y))
-        
-        ;; 枝刈り 
+
+        ;; 枝刈り
         ((and (< x max-x) (< y max-y)) ; x,y ともに現在の仮値よりも小さければ、これ以上 y をデクリメントする必要はない
-         (loop (- x 1) max possibly max-x max-y))
+          (loop (- x 1) max possibly max-x max-y))
 
         ;; 回文数かつ、現在の仮値より大きい場合は更新
         ((and (palindrome? product) (> product possibly))
-         (loop (- x 1) max product x y)) ; x をデクリメントして次に進む
-        
+          (loop (- x 1) max product x y)) ; x をデクリメントして次に進む
+
         ;; y が最小に達した場合、x をデクリメントし y をリセット
         ((= y 1)
-         (loop (- x 1) max possibly max-x max-y))
+          (loop (- x 1) max possibly max-x max-y))
 
         ;; それ以外の場合は y をデクリメントして繰り返し
         (else (loop x (- y 1) possibly max-x max-y))))))
 
 ;; 回文数判定関数
 (define (palindrome? x)
-  (cond 
+  (cond
     ((number? x) (equal? (string->list (number->string x)) (reverse (string->list (number->string x)))))
     (else #f)))
-

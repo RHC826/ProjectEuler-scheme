@@ -11,7 +11,6 @@ comment:
 篩はcons と filter の非効率そうなものと、ベクトルを使ったエラトステネスのふるいの２つを試した。
 Lisp のリストは連結リストなので、ベクトルにするだけで速くなりそう。
 しかし、Lisp を使った甲斐がない気もする。
-
 |#
 ;;; score
 ;; real    0m10.776s
@@ -21,11 +20,10 @@ Lisp のリストは連結リストなので、ベクトルにするだけで速
 ;; real    0m1.550s
 ;; user    0m3.205s
 ;; sys     0m0.127s
-;; 
+;;
 ;; real    0m0.019s
 ;; user    0m0.026s
 ;; sys     0m0.007s
-
 
 ;;; エントリーポイント
 (define (main args)
@@ -33,7 +31,7 @@ Lisp のリストは連結リストなので、ベクトルにするだけで速
   0)
 
 ;;; 実装
-;; given primes. 
+;; given primes.
 (define primes '(2 3 5 7 11 13))
 
 ;; 試し割
@@ -42,13 +40,12 @@ Lisp のリストは連結リストなので、ベクトルにするだけで速
 ;; sys     0m0.127s
 (define (Euler7)
   (let loop ((count 15) ; next 13
-        (found primes))
+             (found primes))
     (if (>= (length found) 10001)
       (car (reverse found))
       (if (next-prime count found)
         (loop (+ count 2) (append found (list count)))
-        (loop (+ count 2) found)
-        ))))
+        (loop (+ count 2) found)))))
 
 (define (next-prime n primes)
   (let ((prime? #f))
@@ -57,9 +54,8 @@ Lisp のリストは連結リストなので、ベクトルにするだけで速
       ((< (sqrt n) (car primes)) #t)
       ((null? primes) #t)
       ((= 0 (remainder n (car primes)))
-       #f)
+        #f)
       (else (next-prime n (cdr primes))))))
-
 
 ;; エラトステネスのふるいを使う方法
 ;; N までの自然数に素数がいくつあるのかを調べるにはとても速い方法だが、
@@ -78,11 +74,11 @@ Lisp のリストは連結リストなので、ベクトルにするだけで速
   ;; 再帰で素数リストを作る
   (define (sieve-helper numbers primes)
     (if (null? numbers)
-        (reverse primes) ; 完了時には primes を返す
-        (let* ((current (car numbers)) ; 現在注目する数
-               (filtered (filter (lambda (x) (not (zero? (remainder x current))))
-                                 (cdr numbers)))) ; current の倍数を除去
-          (sieve-helper filtered (cons current primes))))) ; current を素数として記録
+      (reverse primes) ; 完了時には primes を返す
+      (let* ((current (car numbers)) ; 現在注目する数
+             (filtered (filter (lambda (x) (not (zero? (remainder x current))))
+                        (cdr numbers)))) ; current の倍数を除去
+        (sieve-helper filtered (cons current primes))))) ; current を素数として記録
 
   ;; 2 から n までのリストを作成
   (sieve-helper (iota (- n 1) 2) '()))
@@ -97,17 +93,16 @@ Lisp のリストは連結リストなので、ベクトルにするだけで速
     ;; √n までの数をループ（上限を floor(sqrt n) とする）
     (let ((limit (floor (sqrt n))))
       (do ((i 2 (+ i 1)))
-          ((> i limit))
+        ((> i limit))
         (if (vector-ref is-prime i)
-            ;; i が素数なら、i*i から n までの i の倍数をふるい落とす
-            (do ((j (* i i) (+ j i))) ; j = i*i, 次は j+i
-                ((> j n))
-              (vector-set! is-prime j #f)))))
+          ;; i が素数なら、i*i から n までの i の倍数をふるい落とす
+          (do ((j (* i i) (+ j i))) ; j = i*i, 次は j+i
+            ((> j n))
+            (vector-set! is-prime j #f)))))
     ;; ベクターから素数だけを抽出してリストにする
     (let loop ((i 2) (primes '()))
       (if (> i n)
-          (reverse primes)  ; 昇順に並ぶように reverse をかける
-          (if (vector-ref is-prime i)
-              (loop (+ i 1) (cons i primes))
-              (loop (+ i 1) primes))))))
-
+        (reverse primes) ; 昇順に並ぶように reverse をかける
+        (if (vector-ref is-prime i)
+          (loop (+ i 1) (cons i primes))
+          (loop (+ i 1) primes))))))
